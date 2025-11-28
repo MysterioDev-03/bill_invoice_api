@@ -207,77 +207,153 @@ def words_to_text(words: List[Dict[str,Any]]) -> str:
     return ' '.join([w['text'] for w in words]).strip()
 
 # ---------------------------
-# Extract candidate items from rows using columns
-# Returns dicts: item_name, quantity, unit_price, amount
+# Improved line-item extractor (drop-in replacement)
 # ---------------------------
+DATE_RE = re.compile(r'\b\d{1,2}[\/\-\.\s]\d{1,2}[\/\-\.\s]\d{2,4}\b')
+
+def is_date_token(txt: str) -> bool:
+    if not txt:
+        return False
+    return bool(DATE_RE.search(txt))
 
 def extract_line_item_from_row_using_columns(row: List[Dict[str,Any]], centers: List[int], page_style: str = 'unknown') -> Dict[str,Any] | None:
+    """
+    Heuristics:
+    - Build column map, then collect numeric tokens sorted by x (right-to-left)
+    - Rightmost plausible numeric -> amount
+    - Among remaining numerics left of amount:
+        - first small integer (<=1000 and nearly integer) -> qty
+        - first reasonable decimal/number -> rate
+    - If qty missing and rate present -> qty = amount / rate (if plausible)
+    - If rate missing and qty present -> rate = amount / qty
+    - Remove date-like tokens from item_name and ignore date tokens when selecting numerics
+    """
     colmap = assign_row_words_to_columns(row, centers)
-    # heuristic: left-most columns -> description, right-most -> amount/rate/qty
     ncols = len(centers)
-    # pick description from first non-empty column from left
-    desc = ''
-    for i in range(ncols):
-        t = words_to_text(colmap.get(i, []))
-        if t and not re.search(r'^\d', t):
-            desc = t
-            break
-    # gather numeric tokens from rightmost columns
+
+    # Build full-row text but we'll remove date tokens later
+    # Prepare numeric candidates: collect all numeric-like words with xmid
     numeric_candidates = []
-    for i in range(ncols-1, -1, -1):
-        for w in reversed(colmap.get(i, [])):
-            val = normalize_number_token(w['text'], style=page_style)
-            if val is not None:
-                numeric_candidates.append((i, val, w))
+    for w in row:
+        txt = w['text']
+        if is_date_token(txt):
+            continue
+        val = normalize_number_token(txt, style=page_style)
+        if val is not None:
+            x1,_,x2,_ = w['bbox']
+            xmid = (x1 + x2) / 2.0
+            numeric_candidates.append((xmid, val, txt, w))
+
     if not numeric_candidates:
         return None
-    # amount is first numeric candidate (rightmost/highest x)
-    amount = numeric_candidates[0][1]
-    # find quantity: small integer near left of amount
+
+    # Sort numeric candidates by xmid descending (right-to-left)
+    numeric_candidates.sort(key=lambda t: t[0], reverse=True)
+
+    # Choose amount: first numeric that is plausible (not a year-like, > 0, not tiny fractional like 0.0)
+    amount = None
+    amount_x = None
+    for xmid, val, txt, w in numeric_candidates:
+        # skip values that look like years e.g., 2025
+        try:
+            vint = int(round(val))
+            if 1900 <= vint <= 2100:
+                continue
+        except Exception:
+            pass
+        # skip nonsense zeros
+        if val is None or val <= 0:
+            continue
+        amount = float(val)
+        amount_x = xmid
+        break
+
+    if amount is None:
+        return None
+
+    # Now gather left-side candidates (x < amount_x), sorted descending (closest to amount first)
+    left_candidates = [(x,v,txt,w) for x,v,txt,w in numeric_candidates if x < amount_x]
+    left_candidates.sort(key=lambda t: t[0], reverse=True)
+
     qty = None
     rate = None
-    for idx, val, w in numeric_candidates[1:5]:
-        # heuristic: qty is small integer <= 1000 and likely integer
-        if qty is None and abs(round(val) - val) < 1e-6 and 0 < val <= 10000 and val <= 1000:
-            qty = int(round(val))
+
+    # Heuristics to pick qty and rate from left candidates
+    for xmid, val, txt, w in left_candidates:
+        # skip dates or weird tokens (already filtered but just in case)
+        if is_date_token(txt):
             continue
-        if rate is None and val > 0:
-            rate = val
-    # fallback: if qty missing but rate exists, compute qty = amount / rate
-    if qty is None and rate and rate != 0:
+        # candidate integer-like and small -> likely qty
+        if qty is None:
+            # treat as qty if it's an almost-integer and reasonably small
+            if abs(round(val) - val) < 1e-6 and 0 < val <= 10000:
+                # further prefer small numbers (<=1000) as qty
+                if val <= 1000:
+                    qty = int(round(val))
+                    continue
+        # candidate plausible as rate: decimals, or > 10 etc
+        if rate is None:
+            # if it has decimals or > 10 (and not huge), accept as rate
+            if (not abs(round(val) - val) < 1e-6) or (val > 10 and val < 1e7):
+                rate = float(val)
+                continue
+        # fallback: if still nothing, accept any numeric into rate
+        if rate is None:
+            rate = float(val)
+
+    # Fallback inference
+    if qty is None and rate is not None and rate != 0:
         try:
             qcand = amount / rate
-            if 0 < qcand < 1e6:
-                qty = int(round(qcand)) if abs(round(qcand)-qcand) < 0.01 else qcand
+            if qcand > 0 and qcand < 1e6:
+                # prefer integer if nearly integer
+                if abs(round(qcand) - qcand) < 0.01:
+                    qty = int(round(qcand))
+                else:
+                    qty = round(qcand, 2)
         except Exception:
             qty = None
-    # fallback: if rate missing but qty exists
-    if rate is None and qty and qty != 0:
+
+    if rate is None and qty is not None and qty != 0:
         try:
             rate = amount / qty
         except Exception:
             rate = None
-    # ensure description contains letters
-    if not re.search(r'[A-Za-z]', desc):
-        # try building desc by taking all words left of first numeric in row
-        desc_parts = []
-        for w in row:
-            if normalize_number_token(w['text'], style=page_style) is None:
-                desc_parts.append(w['text'])
-            else:
-                break
-        desc = ' '.join(desc_parts).strip()
 
-    # filter out lines that look like totals or headers
-    low_desc = desc.lower()
-    if any(x in low_desc for x in ['total', 'subtotal', 'balance', 'tax', 'discount', 'amount due', 'grand total']):
+    # Compose description: take words left of the first numeric token (left-most numeric in row)
+    # Find the x position of the earliest numeric in the row (leftmost numeric)
+    all_numeric_x = [ ( (w['bbox'][0] + w['bbox'][2])/2.0, w ) for w in row if normalize_number_token(w['text'], style=page_style) is not None and not is_date_token(w['text'])]
+    first_numeric_x = None
+    if all_numeric_x:
+        first_numeric_x = min(all_numeric_x, key=lambda t: t[0])[0]
+
+    desc_parts = []
+    for w in row:
+        x1,_,x2,_ = w['bbox']
+        xmid = (x1 + x2) / 2.0
+        txt = w['text'].strip()
+        # Exclude tokens that are numeric/date and those that are to the right of first_numeric_x
+        if first_numeric_x is not None and xmid >= first_numeric_x:
+            continue
+        if is_date_token(txt):
+            continue
+        # skip small numeric tokens embedded in description
+        if normalize_number_token(txt, style=page_style) is not None:
+            continue
+        desc_parts.append(txt)
+
+    item_name = ' '.join(desc_parts).strip()
+    # final cleanup: collapse multiple spaces and trim
+    item_name = re.sub(r'\s{2,}', ' ', item_name).strip()
+
+    # Filter out lines that are totals/headers
+    if not item_name or not re.search(r'[A-Za-z]', item_name):
         return None
-
-    if amount is None or not re.search(r'[A-Za-z]', desc):
+    if any(k in item_name.lower() for k in ['total', 'subtotal', 'balance', 'grand total', 'page', 'printed on']):
         return None
 
     return {
-        'item_name': desc.strip(),
+        'item_name': item_name,
         'quantity': qty if qty is not None else None,
         'unit_price': float(rate) if rate is not None else None,
         'amount': float(amount)
