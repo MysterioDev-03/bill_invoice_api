@@ -85,7 +85,7 @@ async def process_invoice_file(file: UploadFile = File(...)):
             ensure_dir(output_dir)
 
             # Run the full processing pipeline
-            run_summary, extracted_items = process_document(input_path, output_dir)
+            run_summary, extracted_items = process_document_kmeans(input_path, output_dir)
             
             # Format and return the final JSON response
             return {
