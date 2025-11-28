@@ -1,0 +1,608 @@
+[
+  [
+    {
+      "text": "INVOICE",
+      "confidence": 96.0,
+      "bbox": [
+        93,
+        195,
+        410,
+        277
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "INVOICE",
+      "confidence": 96.0,
+      "bbox": [
+        1163,
+        199,
+        1342,
+        239
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "DATE:",
+      "confidence": 88.0,
+      "bbox": [
+        1357,
+        199,
+        1481,
+        239
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "JANUARY",
+      "confidence": 91.0,
+      "bbox": [
+        1223,
+        245,
+        1373,
+        292
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "2022",
+      "confidence": 95.0,
+      "bbox": [
+        1391,
+        245,
+        1473,
+        292
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "40",
+      "confidence": 87.0,
+      "bbox": [
+        1157,
+        249,
+        1202,
+        281
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "Your",
+      "confidence": 96.0,
+      "bbox": [
+        88,
+        287,
+        167,
+        335
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "Name",
+      "confidence": 94.0,
+      "bbox": [
+        184,
+        287,
+        276,
+        335
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "4234",
+      "confidence": 72.0,
+      "bbox": [
+        88,
+        333,
+        170,
+        365
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "Malin",
+      "confidence": 69.0,
+      "bbox": [
+        181,
+        333,
+        259,
+        365
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "New",
+      "confidence": 95.0,
+      "bbox": [
+        379,
+        333,
+        453,
+        365
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "York,",
+      "confidence": 92.0,
+      "bbox": [
+        459,
+        333,
+        541,
+        373
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "Nv",
+      "confidence": 60.0,
+      "bbox": [
+        552,
+        333,
+        604,
+        365
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "42345",
+      "confidence": 68.0,
+      "bbox": [
+        615,
+        333,
+        718,
+        365
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "Streat",
+      "confidence": 91.0,
+      "bbox": [
+        269,
+        334,
+        369,
+        365
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "PRICE",
+      "confidence": 96.0,
+      "bbox": [
+        751,
+        495,
+        862,
+        552
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "ary",
+      "confidence": 53.0,
+      "bbox": [
+        1053,
+        496,
+        1127,
+        552
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "DESCRIPTION",
+      "confidence": 96.0,
+      "bbox": [
+        181,
+        506,
+        430,
+        538
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "TOTAL",
+      "confidence": 95.0,
+      "bbox": [
+        1331,
+        507,
+        1452,
+        538
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "IWEM",
+      "confidence": 52.0,
+      "bbox": [
+        84,
+        509,
+        170,
+        538
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "services",
+      "confidence": 71.0,
+      "bbox": [
+        219,
+        561,
+        350,
+        631
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "4",
+      "confidence": 66.0,
+      "bbox": [
+        539,
+        565,
+        570,
+        610
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "Medical",
+      "confidence": 67.0,
+      "bbox": [
+        68,
+        568,
+        208,
+        624
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "4",
+      "confidence": 75.0,
+      "bbox": [
+        1078,
+        578,
+        1103,
+        610
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "Modical",
+      "confidence": 80.0,
+      "bbox": [
+        84,
+        649,
+        209,
+        681
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "porformed",
+      "confidence": 73.0,
+      "bbox": [
+        363,
+        649,
+        529,
+        685
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "2",
+      "confidence": 92.0,
+      "bbox": [
+        539,
+        649,
+        563,
+        681
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "4",
+      "confidence": 96.0,
+      "bbox": [
+        1078,
+        649,
+        1096,
+        681
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "sewites",
+      "confidence": 57.0,
+      "bbox": [
+        219,
+        650,
+        355,
+        681
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "Medical",
+      "confidence": 93.0,
+      "bbox": [
+        84,
+        784,
+        209,
+        820
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "sesvices",
+      "confidence": 82.0,
+      "bbox": [
+        219,
+        784,
+        356,
+        820
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "performed",
+      "confidence": 69.0,
+      "bbox": [
+        363,
+        784,
+        529,
+        824
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "$10,00",
+      "confidence": 65.0,
+      "bbox": [
+        750,
+        784,
+        862,
+        825
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "$10,00",
+      "confidence": 63.0,
+      "bbox": [
+        1335,
+        784,
+        1447,
+        824
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "4",
+      "confidence": 96.0,
+      "bbox": [
+        539,
+        788,
+        559,
+        820
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "[Medical",
+      "confidence": 76.0,
+      "bbox": [
+        69,
+        844,
+        219,
+        924
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "performed",
+      "confidence": 81.0,
+      "bbox": [
+        363,
+        923,
+        529,
+        963
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "$10,00",
+      "confidence": 91.0,
+      "bbox": [
+        750,
+        923,
+        862,
+        963
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "$10,00",
+      "confidence": 71.0,
+      "bbox": [
+        1335,
+        923,
+        1447,
+        960
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "6",
+      "confidence": 91.0,
+      "bbox": [
+        539,
+        924,
+        562,
+        955
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "4",
+      "confidence": 96.0,
+      "bbox": [
+        1078,
+        926,
+        1097,
+        955
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "$50,00",
+      "confidence": 85.0,
+      "bbox": [
+        1335,
+        999,
+        1447,
+        1039
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "Tax",
+      "confidence": 94.0,
+      "bbox": [
+        1011,
+        1054,
+        1072,
+        1116
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "$10,00",
+      "confidence": 68.0,
+      "bbox": [
+        1335,
+        1071,
+        1447,
+        1112
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "Total",
+      "confidence": 90.0,
+      "bbox": [
+        1011,
+        1122,
+        1089,
+        1183
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "PAYMENT",
+      "confidence": 95.0,
+      "bbox": [
+        80,
+        1307,
+        255,
+        1342
+      ],
+      "page": 1,
+      "block_num": 1
+    },
+    {
+      "text": "DETAILS.",
+      "confidence": 94.0,
+      "bbox": [
+        265,
+        1307,
+        415,
+        1342
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ],
+  [
+    {
+      "text": "207234567890",
+      "confidence": 57.0,
+      "bbox": [
+        307,
+        1403,
+        541,
+        1435
+      ],
+      "page": 1,
+      "block_num": 1
+    }
+  ]
+]

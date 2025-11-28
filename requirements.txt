@@ -1,0 +1,27 @@
+opencv-python>=4.7.0
+numpy
+pillow
+pdf2image
+pytesseract
+scikit-image
+langdetect
+unicodedata2
+
+#FastAPI/Uvicorn
+fastapi
+uvicorn
+python-multipart
+
+# Utilities
+scipy
+imutils
+tqdm
+
+# Optional/Future ML
+# indic-transliteration==2.3.0
+# layoutparser
+# torch 
+# torchvision 
+# torchaudio 
+# ultralytics
+# transformers
