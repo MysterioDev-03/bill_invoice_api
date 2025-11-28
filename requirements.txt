@@ -11,6 +11,8 @@ unicodedata2
 fastapi
 uvicorn
 python-multipart
+requests==2.31.0
+
 
 # Utilities
 scipy
