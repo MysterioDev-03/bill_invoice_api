@@ -16,6 +16,14 @@ ensure_dir(BASE_OUTPUT_DIR)
 # ------------------------
 # 2. NOW define the endpoint
 # ------------------------
+def safe_float(x):
+    try:
+        if x is None:
+            return 0.0
+        return float(x)
+    except:
+        return 0.0
+
 @app.post("/extract-bill-data")
 async def extract_bill_data(url: str):
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -49,9 +57,9 @@ async def extract_bill_data(url: str):
                 for it in extracted_items:
                     page_items.append({
                         "item_name": it.get("item_name", ""),
-                        "item_amount": float(it.get("amount", 0.0)),
-                        "item_rate": float(it.get("unit_price", 0.0)),
-                        "item_quantity": float(it.get("quantity", 0.0))
+                        "item_amount": safe_float(it.get("amount", 0.0)),
+                        "item_rate": safe_float(it.get("unit_price", 0.0)),
+                        "item_quantity": safe_float(it.get("quantity", 0.0))
                     })
                     total_items += 1
 
