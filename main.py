@@ -1,118 +1,128 @@
 import os
 import shutil
-import tempfile 
-import time 
-import re # <-- Added for the column classification logic
-from fastapi import FastAPI, File, UploadFile, HTTPException
-from fastapi.responses import JSONResponse
+import tempfile
+import time
+import requests
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict, Any
 
-# Assuming your processing logic is in preprocessing.py
-# Make sure you have applied the column classification fixes 
-# to your 'preprocessing.py' file as discussed previously!
 from preprocessing import process_document_kmeans, ensure_dir
 
-# ----------------------------------------------------
-# 1. Initialization and Data Models
-# ----------------------------------------------------
-class LineItem(BaseModel):
-    item_name: str
-    quantity: float | None
-    unit_price: float | None
-    amount: float | None
+BASE_OUTPUT_DIR = "data/outputs"
+ensure_dir(BASE_OUTPUT_DIR)
 
-class FraudMetrics(BaseModel):
-    whiteners: int
-    suspicious_numbers: int
-    inconsistent_fonts: bool
-    numeric_patch_detected: bool
-
-class PageSummary(BaseModel):
-    page: int
-    skew_angle: float
-    language: str
-    table_count: int
-    fraud: FraudMetrics
-    line_items_extracted: int
-
-class ProcessedDocument(BaseModel):
-    status: str
-    file_name: str
-    results: List[PageSummary]
-    extracted_data: List[LineItem] 
-
-# Initialize FastAPI app
 app = FastAPI(
-    title="Invoice Processing and Fraud Detection API",
-    description="A high-speed engine for bill processing using ML and heuristics."
+    title="HackRx Bill Extraction API",
+    description="Extracts bill line items in the HackRx required format"
 )
 
-# Define the base directory for all PERMANENT outputs (logs, final JSONs, debug images)
-BASE_OUTPUT_DIR = "data/outputs" 
-ensure_dir(BASE_OUTPUT_DIR) # Ensure this base directory exists at startup
+# -------------------------
+# Request Body
+# -------------------------
+class ExtractRequest(BaseModel):
+    document: str   # URL of document
+
+
+# -------------------------
+# Response Schema
+# -------------------------
+class BillItem(BaseModel):
+    item_name: str
+    item_amount: float
+    item_rate: float
+    item_quantity: float
+
+
+class PageLineItems(BaseModel):
+    page_no: str
+    page_type: str
+    bill_items: List[BillItem]
+
+
+class ExtractResponse(BaseModel):
+    is_success: bool
+    token_usage: Dict[str, int]
+    data: Dict[str, Any]
+
 
 # ----------------------------------------------------
-# 2. API Endpoint
+# HackRx API: POST /extract-bill-data
 # ----------------------------------------------------
+@app.post("/extract-bill-data", response_model=ExtractResponse)
+async def extract_bill_data(req: ExtractRequest):
 
-@app.post("/process_invoice", response_model=ProcessedDocument)
-async def process_invoice_file(file: UploadFile = File(...)):
-    """
-    Accepts an invoice file (PDF or image), runs the full pipeline, 
-    saves logs to a permanent folder, and returns the extracted data.
-    """
-    
-    # 1. Use a Temporary Directory for safe, automatic cleanup
+    # Create temp directory
     with tempfile.TemporaryDirectory() as temp_dir:
-        
-        # Define the path for the uploaded input file inside the temporary folder
-        input_path = os.path.join(temp_dir, file.filename)
-        
-        # Define the unique PERMANENT output directory for this run's logs/outputs
-        timestamp = int(time.time())
-        file_base_name = os.path.splitext(file.filename)[0]
-        unique_folder_name = f"{file_base_name}_{timestamp}"
-        output_dir = os.path.join(BASE_OUTPUT_DIR, unique_folder_name)
-        
-        try:
-            # Save the uploaded file to the temporary location
-            # Note: This is crucial as file.file (a SpooledTemporaryFile) is only good for one read.
-            with open(input_path, "wb") as buffer:
-                shutil.copyfileobj(file.file, buffer)
 
-            # Ensure the permanent output directory exists before running the pipeline
+        try:
+            # Download document from URL
+            file_url = req.document
+            file_name = file_url.split("/")[-1].split("?")[0]
+            input_path = os.path.join(temp_dir, file_name)
+
+            r = requests.get(file_url, stream=True)
+            if r.status_code != 200:
+                raise Exception("Failed to download document.")
+
+            with open(input_path, "wb") as f:
+                shutil.copyfileobj(r.raw, f)
+
+            # Permanent output dir
+            timestamp = int(time.time())
+            output_dir = os.path.join(BASE_OUTPUT_DIR, f"{file_name}_{timestamp}")
             ensure_dir(output_dir)
 
-            # Run the full processing pipeline
+            # Run your ML pipeline
             run_summary, extracted_items = process_document_kmeans(input_path, output_dir)
-            
-            # Format and return the final JSON response
+
+            # -----------------------------
+            # Convert your output → HackRx format
+            # -----------------------------
+            pagewise_output = []
+            total_items = 0
+
+            for page in run_summary:
+                page_items = []
+                for it in extracted_items:
+                    page_items.append({
+                        "item_name": it.item_name,
+                        "item_amount": it.amount or 0.0,
+                        "item_rate": it.unit_price or 0.0,
+                        "item_quantity": it.quantity or 0.0
+                    })
+                    total_items += 1
+
+                pagewise_output.append({
+                    "page_no": str(page.page),
+                    "page_type": "Bill Detail",     # If you have logic, replace
+                    "bill_items": page_items
+                })
+
+            # -----------------------------
+            # Final response
+            # -----------------------------
             return {
-                "status": "success",
-                "file_name": file.filename,
-                "results": run_summary,
-                "extracted_data": extracted_items
+                "is_success": True,
+                "token_usage": {
+                    "total_tokens": 0,
+                    "input_tokens": 0,
+                    "output_tokens": 0
+                },
+                "data": {
+                    "pagewise_line_items": pagewise_output,
+                    "total_item_count": total_items
+                }
             }
 
         except Exception as e:
-            # Return a standard HTTP error response
-            print(f"Error processing file: {e}")
-            # Clean up the permanent directory if it was created but the run failed
-            if os.path.exists(output_dir):
-                shutil.rmtree(output_dir)
-            
+            print("ERROR:", e)
             raise HTTPException(
-                status_code=500, 
-                detail=f"An error occurred during processing: {str(e)}"
+                status_code=500,
+                detail=f"Failed to process document: {str(e)}"
             )
-        
-    # Temporary directory is cleaned up automatically here.
 
-# ----------------------------------------------------
-# 3. Health Check Endpoint
-# ----------------------------------------------------
+
 @app.get("/")
-def health_check():
-    """A simple endpoint to confirm the API is running."""
-    return {"status": "ok", "message": "Invoice Processor API is running."}
+def health():
+    return {"status": "ok"}
