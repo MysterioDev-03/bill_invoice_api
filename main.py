@@ -11,7 +11,7 @@ from typing import List, Dict, Any
 # Assuming your processing logic is in preprocessing.py
 # Make sure you have applied the column classification fixes 
 # to your 'preprocessing.py' file as discussed previously!
-from preprocessing import process_document, ensure_dir 
+from preprocessing import process_document_kmeans, ensure_dir
 
 # ----------------------------------------------------
 # 1. Initialization and Data Models
