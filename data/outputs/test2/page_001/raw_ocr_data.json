@@ -1,0 +1,2810 @@
+[
+  {
+    "text": "Sample",
+    "confidence": 95.0,
+    "bbox": [
+      70,
+      93,
+      198,
+      129
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Document",
+    "confidence": 95.0,
+    "bbox": [
+      210,
+      93,
+      387,
+      121
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "2",
+    "confidence": 96.0,
+    "bbox": [
+      396,
+      93,
+      416,
+      121
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "[Description",
+    "confidence": 75.0,
+    "bbox": [
+      84,
+      190,
+      214,
+      224
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Qty",
+    "confidence": 86.0,
+    "bbox": [
+      666,
+      195,
+      703,
+      220
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Rate",
+    "confidence": 96.0,
+    "bbox": [
+      879,
+      195,
+      928,
+      213
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Discount",
+    "confidence": 96.0,
+    "bbox": [
+      1003,
+      190,
+      1101,
+      224
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Net",
+    "confidence": 96.0,
+    "bbox": [
+      1202,
+      195,
+      1238,
+      213
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Amt",
+    "confidence": 69.0,
+    "bbox": [
+      1244,
+      195,
+      1290,
+      213
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Consultation",
+    "confidence": 61.0,
+    "bbox": [
+      95,
+      227,
+      207,
+      253
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,950.00",
+    "confidence": 94.0,
+    "bbox": [
+      1211,
+      235,
+      1283,
+      252
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Consultation",
+    "confidence": 75.0,
+    "bbox": [
+      109,
+      266,
+      198,
+      279
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Charge",
+    "confidence": 91.0,
+    "bbox": [
+      203,
+      266,
+      256,
+      284
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "|",
+    "confidence": 91.0,
+    "bbox": [
+      262,
+      265,
+      264,
+      284
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "DR",
+    "confidence": 93.0,
+    "bbox": [
+      274,
+      266,
+      297,
+      279
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "PREETHI",
+    "confidence": 84.0,
+    "bbox": [
+      302,
+      266,
+      372,
+      279
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "MARY",
+    "confidence": 96.0,
+    "bbox": [
+      381,
+      266,
+      428,
+      279
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 94.0,
+    "bbox": [
+      722,
+      257,
+      756,
+      288
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "300.00",
+    "confidence": 95.0,
+    "bbox": [
+      867,
+      258,
+      924,
+      288
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 93.0,
+    "bbox": [
+      1055,
+      269,
+      1091,
+      284
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "300.00",
+    "confidence": 95.0,
+    "bbox": [
+      1229,
+      266,
+      1285,
+      281
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Consultation",
+    "confidence": 91.0,
+    "bbox": [
+      109,
+      299,
+      198,
+      312
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Charge",
+    "confidence": 95.0,
+    "bbox": [
+      203,
+      299,
+      256,
+      317
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "|",
+    "confidence": 95.0,
+    "bbox": [
+      263,
+      299,
+      264,
+      317
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "DR",
+    "confidence": 95.0,
+    "bbox": [
+      274,
+      299,
+      297,
+      312
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "VIDYA",
+    "confidence": 92.0,
+    "bbox": [
+      302,
+      299,
+      351,
+      312
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "PREMACHANDRAN.-",
+    "confidence": 33.0,
+    "bbox": [
+      360,
+      299,
+      520,
+      312
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 88.0,
+    "bbox": [
+      722,
+      295,
+      756,
+      322
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "200.00",
+    "confidence": 92.0,
+    "bbox": [
+      867,
+      295,
+      924,
+      322
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 93.0,
+    "bbox": [
+      1055,
+      302,
+      1091,
+      317
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "200.00",
+    "confidence": 92.0,
+    "bbox": [
+      1229,
+      299,
+      1285,
+      314
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Dortors",
+    "confidence": 60.0,
+    "bbox": [
+      109,
+      332,
+      165,
+      345
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Visiting",
+    "confidence": 92.0,
+    "bbox": [
+      168,
+      332,
+      221,
+      350
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "SALIL",
+    "confidence": 92.0,
+    "bbox": [
+      315,
+      332,
+      359,
+      345
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 96.0,
+    "bbox": [
+      722,
+      324,
+      756,
+      354
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "250.00",
+    "confidence": 92.0,
+    "bbox": [
+      867,
+      324,
+      924,
+      354
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 92.0,
+    "bbox": [
+      1055,
+      335,
+      1091,
+      350
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "250.00",
+    "confidence": 96.0,
+    "bbox": [
+      1229,
+      332,
+      1285,
+      347
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Doctors",
+    "confidence": 54.0,
+    "bbox": [
+      109,
+      365,
+      165,
+      378
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Visiting",
+    "confidence": 69.0,
+    "bbox": [
+      168,
+      365,
+      221,
+      383
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Fee|",
+    "confidence": 91.0,
+    "bbox": [
+      227,
+      365,
+      261,
+      383
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "DRS",
+    "confidence": 65.0,
+    "bbox": [
+      272,
+      365,
+      309,
+      378
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "SALIL",
+    "confidence": 92.0,
+    "bbox": [
+      315,
+      365,
+      359,
+      378
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "KUMAR\u2014",
+    "confidence": 52.0,
+    "bbox": [
+      364,
+      365,
+      433,
+      378
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "4,00",
+    "confidence": 90.0,
+    "bbox": [
+      720,
+      361,
+      756,
+      388
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "300.00",
+    "confidence": 86.0,
+    "bbox": [
+      867,
+      361,
+      929,
+      388
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 94.0,
+    "bbox": [
+      1055,
+      368,
+      1091,
+      383
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,200.00",
+    "confidence": 87.0,
+    "bbox": [
+      1214,
+      365,
+      1285,
+      382
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Room",
+    "confidence": 95.0,
+    "bbox": [
+      95,
+      402,
+      147,
+      416
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Charges",
+    "confidence": 86.0,
+    "bbox": [
+      153,
+      401,
+      226,
+      421
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "4,850.00",
+    "confidence": 96.0,
+    "bbox": [
+      1210,
+      403,
+      1283,
+      420
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "RR",
+    "confidence": 86.0,
+    "bbox": [
+      109,
+      434,
+      132,
+      447
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "-2-Room",
+    "confidence": 86.0,
+    "bbox": [
+      137,
+      434,
+      199,
+      447
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Rent",
+    "confidence": 96.0,
+    "bbox": [
+      204,
+      434,
+      238,
+      448
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Step",
+    "confidence": 96.0,
+    "bbox": [
+      243,
+      434,
+      276,
+      452
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Dawn",
+    "confidence": 93.0,
+    "bbox": [
+      281,
+      434,
+      322,
+      447
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "[cu",
+    "confidence": 62.0,
+    "bbox": [
+      327,
+      434,
+      348,
+      447
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 93.0,
+    "bbox": [
+      722,
+      432,
+      756,
+      460
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,000.00",
+    "confidence": 95.0,
+    "bbox": [
+      852,
+      432,
+      924,
+      460
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 96.0,
+    "bbox": [
+      1055,
+      438,
+      1091,
+      453
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,000.00",
+    "confidence": 86.0,
+    "bbox": [
+      1214,
+      436,
+      1285,
+      453
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Room",
+    "confidence": 96.0,
+    "bbox": [
+      109,
+      467,
+      151,
+      480
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Rent",
+    "confidence": 96.0,
+    "bbox": [
+      157,
+      467,
+      191,
+      481
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Bystander",
+    "confidence": 93.0,
+    "bbox": [
+      196,
+      467,
+      268,
+      486
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Raom",
+    "confidence": 81.0,
+    "bbox": [
+      274,
+      467,
+      316,
+      480
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 94.0,
+    "bbox": [
+      722,
+      465,
+      756,
+      493
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "900.00",
+    "confidence": 94.0,
+    "bbox": [
+      867,
+      465,
+      929,
+      493
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 96.0,
+    "bbox": [
+      1055,
+      471,
+      1091,
+      486
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "900.00",
+    "confidence": 88.0,
+    "bbox": [
+      1229,
+      469,
+      1285,
+      484
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "$G201-1-Room",
+    "confidence": 66.0,
+    "bbox": [
+      109,
+      500,
+      222,
+      514
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Rent",
+    "confidence": 96.0,
+    "bbox": [
+      227,
+      500,
+      261,
+      514
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Ward",
+    "confidence": 96.0,
+    "bbox": [
+      265,
+      500,
+      304,
+      513
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "A",
+    "confidence": 95.0,
+    "bbox": [
+      308,
+      500,
+      320,
+      514
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 94.0,
+    "bbox": [
+      722,
+      502,
+      756,
+      517
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "250.00",
+    "confidence": 63.0,
+    "bbox": [
+      867,
+      498,
+      929,
+      526
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 96.0,
+    "bbox": [
+      1055,
+      504,
+      1091,
+      519
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "250.00",
+    "confidence": 86.0,
+    "bbox": [
+      1229,
+      502,
+      1285,
+      517
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "$G204-Room",
+    "confidence": 59.0,
+    "bbox": [
+      109,
+      533,
+      207,
+      547
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Rent",
+    "confidence": 96.0,
+    "bbox": [
+      213,
+      533,
+      247,
+      547
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Single",
+    "confidence": 59.0,
+    "bbox": [
+      251,
+      533,
+      296,
+      552
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Non",
+    "confidence": 95.0,
+    "bbox": [
+      301,
+      533,
+      330,
+      547
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Ac",
+    "confidence": 96.0,
+    "bbox": [
+      334,
+      533,
+      353,
+      547
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Room",
+    "confidence": 93.0,
+    "bbox": [
+      359,
+      533,
+      401,
+      546
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "A",
+    "confidence": 93.0,
+    "bbox": [
+      406,
+      533,
+      417,
+      546
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "3.00",
+    "confidence": 95.0,
+    "bbox": [
+      721,
+      531,
+      756,
+      559
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "900.00",
+    "confidence": 95.0,
+    "bbox": [
+      867,
+      531,
+      924,
+      560
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 95.0,
+    "bbox": [
+      1055,
+      537,
+      1091,
+      552
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "2,700.00",
+    "confidence": 67.0,
+    "bbox": [
+      1213,
+      535,
+      1285,
+      552
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Nursing",
+    "confidence": 96.0,
+    "bbox": [
+      95,
+      570,
+      164,
+      590
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Care",
+    "confidence": 86.0,
+    "bbox": [
+      170,
+      570,
+      210,
+      585
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "2,900.00",
+    "confidence": 86.0,
+    "bbox": [
+      1211,
+      572,
+      1283,
+      589
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "RR",
+    "confidence": 91.0,
+    "bbox": [
+      109,
+      605,
+      132,
+      618
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "-2-Stepdown-Nursing",
+    "confidence": 91.0,
+    "bbox": [
+      137,
+      604,
+      289,
+      623
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Charge",
+    "confidence": 95.0,
+    "bbox": [
+      294,
+      605,
+      347,
+      623
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 91.0,
+    "bbox": [
+      722,
+      601,
+      756,
+      627
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,000.00",
+    "confidence": 94.0,
+    "bbox": [
+      852,
+      601,
+      924,
+      627
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 92.0,
+    "bbox": [
+      1055,
+      608,
+      1091,
+      623
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,000.00",
+    "confidence": 87.0,
+    "bbox": [
+      1214,
+      605,
+      1285,
+      621
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "$G201-1-Nursing",
+    "confidence": 69.0,
+    "bbox": [
+      109,
+      637,
+      235,
+      656
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Charge",
+    "confidence": 96.0,
+    "bbox": [
+      239,
+      638,
+      292,
+      656
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 91.0,
+    "bbox": [
+      722,
+      634,
+      756,
+      660
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "400.00",
+    "confidence": 94.0,
+    "bbox": [
+      867,
+      634,
+      924,
+      660
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 93.0,
+    "bbox": [
+      1055,
+      641,
+      1091,
+      656
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "400.00",
+    "confidence": 95.0,
+    "bbox": [
+      1229,
+      638,
+      1285,
+      653
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "$G204-Nursing",
+    "confidence": 38.0,
+    "bbox": [
+      109,
+      670,
+      219,
+      689
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Charge",
+    "confidence": 95.0,
+    "bbox": [
+      225,
+      671,
+      278,
+      689
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "3.00",
+    "confidence": 94.0,
+    "bbox": [
+      721,
+      667,
+      761,
+      693
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "600.00",
+    "confidence": 60.0,
+    "bbox": [
+      867,
+      667,
+      924,
+      693
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 92.0,
+    "bbox": [
+      1055,
+      674,
+      1091,
+      689
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,500.00",
+    "confidence": 91.0,
+    "bbox": [
+      1214,
+      671,
+      1285,
+      688
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Laboratary",
+    "confidence": 91.0,
+    "bbox": [
+      95,
+      707,
+      191,
+      727
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "2,600.00",
+    "confidence": 95.0,
+    "bbox": [
+      1211,
+      709,
+      1283,
+      726
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 92.0,
+    "bbox": [
+      722,
+      742,
+      756,
+      757
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "50.00",
+    "confidence": 53.0,
+    "bbox": [
+      878,
+      738,
+      924,
+      767
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 81.0,
+    "bbox": [
+      1055,
+      744,
+      1091,
+      759
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "\u00a70.00",
+    "confidence": 87.0,
+    "bbox": [
+      1239,
+      742,
+      1285,
+      757
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Blood",
+    "confidence": 93.0,
+    "bbox": [
+      109,
+      773,
+      150,
+      786
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "RYE",
+    "confidence": 51.0,
+    "bbox": [
+      156,
+      773,
+      181,
+      786
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 93.0,
+    "bbox": [
+      722,
+      771,
+      756,
+      799
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "260.00",
+    "confidence": 96.0,
+    "bbox": [
+      867,
+      771,
+      924,
+      800
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 89.0,
+    "bbox": [
+      1055,
+      777,
+      1091,
+      792
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "260.00",
+    "confidence": 96.0,
+    "bbox": [
+      1229,
+      775,
+      1285,
+      790
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "cT",
+    "confidence": 83.0,
+    "bbox": [
+      105,
+      802,
+      131,
+      831
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 92.0,
+    "bbox": [
+      722,
+      808,
+      756,
+      823
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "90.00",
+    "confidence": 93.0,
+    "bbox": [
+      878,
+      804,
+      924,
+      833
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 89.0,
+    "bbox": [
+      1055,
+      810,
+      1091,
+      825
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "90.00",
+    "confidence": 95.0,
+    "bbox": [
+      1239,
+      808,
+      1285,
+      823
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Group",
+    "confidence": 96.0,
+    "bbox": [
+      109,
+      839,
+      153,
+      857
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "RH",
+    "confidence": 96.0,
+    "bbox": [
+      159,
+      839,
+      181,
+      852
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 92.0,
+    "bbox": [
+      722,
+      837,
+      760,
+      866
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "100.00",
+    "confidence": 96.0,
+    "bbox": [
+      868,
+      837,
+      924,
+      866
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 89.0,
+    "bbox": [
+      1055,
+      843,
+      1091,
+      858
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "100.00",
+    "confidence": 87.0,
+    "bbox": [
+      1229,
+      841,
+      1285,
+      856
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "HBsAg",
+    "confidence": 78.0,
+    "bbox": [
+      109,
+      872,
+      158,
+      890
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 94.0,
+    "bbox": [
+      722,
+      874,
+      756,
+      889
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "160.00",
+    "confidence": 66.0,
+    "bbox": [
+      868,
+      874,
+      924,
+      889
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 89.0,
+    "bbox": [
+      1055,
+      876,
+      1091,
+      891
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "180.00",
+    "confidence": 72.0,
+    "bbox": [
+      1229,
+      874,
+      1285,
+      889
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "HCV",
+    "confidence": 87.0,
+    "bbox": [
+      109,
+      905,
+      143,
+      918
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "(CIMA)",
+    "confidence": 94.0,
+    "bbox": [
+      147,
+      905,
+      198,
+      922
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 92.0,
+    "bbox": [
+      722,
+      907,
+      756,
+      922
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "360.00",
+    "confidence": 94.0,
+    "bbox": [
+      867,
+      903,
+      924,
+      932
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 89.0,
+    "bbox": [
+      1055,
+      909,
+      1091,
+      924
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "360.00",
+    "confidence": 96.0,
+    "bbox": [
+      1229,
+      907,
+      1285,
+      922
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "HIV",
+    "confidence": 87.0,
+    "bbox": [
+      109,
+      938,
+      136,
+      951
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "182",
+    "confidence": 74.0,
+    "bbox": [
+      140,
+      938,
+      169,
+      951
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "(CMIA)",
+    "confidence": 60.0,
+    "bbox": [
+      173,
+      938,
+      224,
+      955
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 92.0,
+    "bbox": [
+      722,
+      940,
+      756,
+      955
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "300.00",
+    "confidence": 88.0,
+    "bbox": [
+      867,
+      936,
+      924,
+      965
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 89.0,
+    "bbox": [
+      1055,
+      942,
+      1091,
+      957
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "300.00",
+    "confidence": 96.0,
+    "bbox": [
+      1229,
+      940,
+      1285,
+      955
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Liver",
+    "confidence": 94.0,
+    "bbox": [
+      109,
+      971,
+      144,
+      984
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Function",
+    "confidence": 93.0,
+    "bbox": [
+      149,
+      971,
+      210,
+      985
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Test(LFT)",
+    "confidence": 88.0,
+    "bbox": [
+      215,
+      971,
+      285,
+      988
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 93.0,
+    "bbox": [
+      722,
+      969,
+      756,
+      997
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "400.00",
+    "confidence": 94.0,
+    "bbox": [
+      867,
+      969,
+      924,
+      998
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 92.0,
+    "bbox": [
+      1055,
+      975,
+      1091,
+      990
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "400.00",
+    "confidence": 96.0,
+    "bbox": [
+      1229,
+      973,
+      1285,
+      988
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "PTINR",
+    "confidence": 83.0,
+    "bbox": [
+      109,
+      1004,
+      162,
+      1017
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 91.0,
+    "bbox": [
+      722,
+      1002,
+      760,
+      1031
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "180.00",
+    "confidence": 92.0,
+    "bbox": [
+      868,
+      1002,
+      924,
+      1031
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 86.0,
+    "bbox": [
+      1055,
+      1008,
+      1091,
+      1023
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1850.00",
+    "confidence": 60.0,
+    "bbox": [
+      1229,
+      1006,
+      1285,
+      1021
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Pus",
+    "confidence": 56.0,
+    "bbox": [
+      109,
+      1037,
+      136,
+      1051
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "cis",
+    "confidence": 56.0,
+    "bbox": [
+      140,
+      1037,
+      167,
+      1051
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 93.0,
+    "bbox": [
+      722,
+      1039,
+      756,
+      1054
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "230.00",
+    "confidence": 93.0,
+    "bbox": [
+      867,
+      1035,
+      924,
+      1064
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 96.0,
+    "bbox": [
+      1055,
+      1041,
+      1091,
+      1056
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "230.00",
+    "confidence": 96.0,
+    "bbox": [
+      1229,
+      1039,
+      1285,
+      1054
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "RBS",
+    "confidence": 93.0,
+    "bbox": [
+      109,
+      1070,
+      141,
+      1084
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 94.0,
+    "bbox": [
+      722,
+      1072,
+      756,
+      1087
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "30.00",
+    "confidence": 95.0,
+    "bbox": [
+      878,
+      1068,
+      924,
+      1097
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 96.0,
+    "bbox": [
+      1055,
+      1074,
+      1091,
+      1089
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "30.00",
+    "confidence": 96.0,
+    "bbox": [
+      1239,
+      1072,
+      1285,
+      1087
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "RFT",
+    "confidence": 90.0,
+    "bbox": [
+      109,
+      1099,
+      141,
+      1130
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 94.0,
+    "bbox": [
+      722,
+      1105,
+      756,
+      1120
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "290.00",
+    "confidence": 84.0,
+    "bbox": [
+      867,
+      1101,
+      924,
+      1130
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 95.0,
+    "bbox": [
+      1055,
+      1107,
+      1091,
+      1122
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "290.00",
+    "confidence": 96.0,
+    "bbox": [
+      1229,
+      1105,
+      1285,
+      1120
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "TSH",
+    "confidence": 71.0,
+    "bbox": [
+      108,
+      1136,
+      140,
+      1150
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 94.0,
+    "bbox": [
+      722,
+      1138,
+      756,
+      1153
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "190.00",
+    "confidence": 96.0,
+    "bbox": [
+      868,
+      1138,
+      924,
+      1153
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 96.0,
+    "bbox": [
+      1055,
+      1140,
+      1091,
+      1155
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "190.00",
+    "confidence": 95.0,
+    "bbox": [
+      1229,
+      1138,
+      1285,
+      1153
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Radiology",
+    "confidence": 92.0,
+    "bbox": [
+      95,
+      1173,
+      184,
+      1193
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Services",
+    "confidence": 88.0,
+    "bbox": [
+      189,
+      1173,
+      265,
+      1188
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,250.00",
+    "confidence": 79.0,
+    "bbox": [
+      1211,
+      1175,
+      1283,
+      1192
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Chest",
+    "confidence": 94.0,
+    "bbox": [
+      109,
+      1208,
+      151,
+      1221
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "PA",
+    "confidence": 91.0,
+    "bbox": [
+      156,
+      1208,
+      178,
+      1221
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,00",
+    "confidence": 87.0,
+    "bbox": [
+      722,
+      1204,
+      756,
+      1233
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "250.00",
+    "confidence": 68.0,
+    "bbox": [
+      867,
+      1204,
+      924,
+      1233
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 94.0,
+    "bbox": [
+      1055,
+      1210,
+      1091,
+      1224
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "250.00",
+    "confidence": 94.0,
+    "bbox": [
+      1229,
+      1208,
+      1285,
+      1223
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "USG",
+    "confidence": 93.0,
+    "bbox": [
+      109,
+      1241,
+      143,
+      1254
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Scan",
+    "confidence": 84.0,
+    "bbox": [
+      149,
+      1241,
+      184,
+      1254
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,00",
+    "confidence": 88.0,
+    "bbox": [
+      722,
+      1237,
+      756,
+      1266
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,000.00",
+    "confidence": 93.0,
+    "bbox": [
+      852,
+      1237,
+      924,
+      1266
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 93.0,
+    "bbox": [
+      1055,
+      1243,
+      1091,
+      1257
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "7,000.00",
+    "confidence": 75.0,
+    "bbox": [
+      1214,
+      1241,
+      1285,
+      1258
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Surgery-Procedure",
+    "confidence": 90.0,
+    "bbox": [
+      95,
+      1275,
+      262,
+      1295
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Charges",
+    "confidence": 95.0,
+    "bbox": [
+      268,
+      1276,
+      341,
+      1295
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "8,250.00",
+    "confidence": 94.0,
+    "bbox": [
+      1211,
+      1279,
+      1283,
+      1296
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "ANAES.",
+    "confidence": 88.0,
+    "bbox": [
+      108,
+      1310,
+      167,
+      1323
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "CHARGE",
+    "confidence": 90.0,
+    "bbox": [
+      173,
+      1310,
+      242,
+      1323
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 95.0,
+    "bbox": [
+      722,
+      1299,
+      756,
+      1333
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1,650.00",
+    "confidence": 71.0,
+    "bbox": [
+      852,
+      1299,
+      924,
+      1333
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 91.0,
+    "bbox": [
+      1055,
+      1314,
+      1091,
+      1329
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "7,680.00",
+    "confidence": 59.0,
+    "bbox": [
+      1214,
+      1310,
+      1285,
+      1327
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "GAS",
+    "confidence": 94.0,
+    "bbox": [
+      109,
+      1343,
+      143,
+      1356
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "CHARGES",
+    "confidence": 91.0,
+    "bbox": [
+      147,
+      1343,
+      228,
+      1356
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 95.0,
+    "bbox": [
+      722,
+      1332,
+      756,
+      1366
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "660.00",
+    "confidence": 94.0,
+    "bbox": [
+      867,
+      1332,
+      929,
+      1366
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 91.0,
+    "bbox": [
+      1055,
+      1347,
+      1091,
+      1362
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "660.00",
+    "confidence": 96.0,
+    "bbox": [
+      1229,
+      1343,
+      1285,
+      1358
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "OT",
+    "confidence": 91.0,
+    "bbox": [
+      109,
+      1376,
+      131,
+      1389
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "CHARGES",
+    "confidence": 91.0,
+    "bbox": [
+      135,
+      1376,
+      216,
+      1389
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 95.0,
+    "bbox": [
+      722,
+      1365,
+      756,
+      1399
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "2,640.00",
+    "confidence": 91.0,
+    "bbox": [
+      852,
+      1365,
+      924,
+      1399
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 92.0,
+    "bbox": [
+      1055,
+      1380,
+      1091,
+      1395
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "2,640.00",
+    "confidence": 95.0,
+    "bbox": [
+      1213,
+      1376,
+      1285,
+      1393
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "SURGEON",
+    "confidence": 96.0,
+    "bbox": [
+      109,
+      1409,
+      190,
+      1423
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "FEE",
+    "confidence": 93.0,
+    "bbox": [
+      196,
+      1409,
+      226,
+      1422
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1.00",
+    "confidence": 95.0,
+    "bbox": [
+      722,
+      1398,
+      756,
+      1432
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "3,300.00",
+    "confidence": 87.0,
+    "bbox": [
+      852,
+      1398,
+      924,
+      1432
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "0.00",
+    "confidence": 89.0,
+    "bbox": [
+      1055,
+      1413,
+      1091,
+      1428
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "3,300.00",
+    "confidence": 95.0,
+    "bbox": [
+      1213,
+      1409,
+      1285,
+      1426
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Page",
+    "confidence": 96.0,
+    "bbox": [
+      601,
+      1451,
+      643,
+      1471
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "1lo4",
+    "confidence": 43.0,
+    "bbox": [
+      765,
+      1451,
+      827,
+      1466
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "Printed",
+    "confidence": 81.0,
+    "bbox": [
+      986,
+      1451,
+      1044,
+      1466
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "On",
+    "confidence": 90.0,
+    "bbox": [
+      1050,
+      1451,
+      1075,
+      1466
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": ":",
+    "confidence": 81.0,
+    "bbox": [
+      1085,
+      1455,
+      1089,
+      1466
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "19/11/2025",
+    "confidence": 69.0,
+    "bbox": [
+      1096,
+      1451,
+      1188,
+      1466
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "12:09",
+    "confidence": 80.0,
+    "bbox": [
+      1194,
+      1451,
+      1238,
+      1466
+    ],
+    "page": 1,
+    "block_num": 1
+  },
+  {
+    "text": "PM",
+    "confidence": 95.0,
+    "bbox": [
+      1245,
+      1451,
+      1271,
+      1466
+    ],
+    "page": 1,
+    "block_num": 1
+  }
+]

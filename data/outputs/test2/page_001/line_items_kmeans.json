@@ -1,0 +1,212 @@
+[
+  {
+    "item_name": "Sample Document",
+    "quantity": 2,
+    "unit_price": 1.0,
+    "amount": 2.0
+  },
+  {
+    "item_name": "Consultation Charge   DR PREETHI MARY",
+    "quantity": 1,
+    "unit_price": 300.0,
+    "amount": 300.0
+  },
+  {
+    "item_name": "Consultation Charge   DR VIDYA PREMACHANDRAN.-",
+    "quantity": 1,
+    "unit_price": 200.0,
+    "amount": 200.0
+  },
+  {
+    "item_name": "Dortors Visiting SALIL",
+    "quantity": 1,
+    "unit_price": 250.0,
+    "amount": 250.0
+  },
+  {
+    "item_name": "Doctors Visiting Fee  DRS SALIL KUMAR",
+    "quantity": 1,
+    "unit_price": 1200.0,
+    "amount": 1200.0
+  },
+  {
+    "item_name": "Room Charges",
+    "quantity": 1,
+    "unit_price": 4850.0,
+    "amount": 4850.0
+  },
+  {
+    "item_name": "RR -2-Room Rent Step Dawn [cu",
+    "quantity": 1,
+    "unit_price": 1000.0,
+    "amount": 1000.0
+  },
+  {
+    "item_name": "Room Rent Bystander Raom",
+    "quantity": 1,
+    "unit_price": 900.0,
+    "amount": 900.0
+  },
+  {
+    "item_name": "$G201-1-Room Rent Ward A",
+    "quantity": 1,
+    "unit_price": 250.0,
+    "amount": 250.0
+  },
+  {
+    "item_name": "$G204-Room Rent Single Non Ac Room A",
+    "quantity": 3,
+    "unit_price": 900.0,
+    "amount": 2700.0
+  },
+  {
+    "item_name": "Nursing Care",
+    "quantity": 1,
+    "unit_price": 2900.0,
+    "amount": 2900.0
+  },
+  {
+    "item_name": "RR -2-Stepdown-Nursing Charge",
+    "quantity": 1,
+    "unit_price": 1000.0,
+    "amount": 1000.0
+  },
+  {
+    "item_name": "$G201-1-Nursing Charge",
+    "quantity": 1,
+    "unit_price": 400.0,
+    "amount": 400.0
+  },
+  {
+    "item_name": "$G204-Nursing Charge",
+    "quantity": 3,
+    "unit_price": 500.0,
+    "amount": 1500.0
+  },
+  {
+    "item_name": "Laboratary",
+    "quantity": 1,
+    "unit_price": 2600.0,
+    "amount": 2600.0
+  },
+  {
+    "item_name": "Blood RYE",
+    "quantity": 1,
+    "unit_price": 260.0,
+    "amount": 260.0
+  },
+  {
+    "item_name": "cT",
+    "quantity": 1,
+    "unit_price": 90.0,
+    "amount": 90.0
+  },
+  {
+    "item_name": "Group RH",
+    "quantity": 1,
+    "unit_price": 100.0,
+    "amount": 100.0
+  },
+  {
+    "item_name": "HBsAg",
+    "quantity": 1,
+    "unit_price": 180.0,
+    "amount": 180.0
+  },
+  {
+    "item_name": "HCV (CIMA)",
+    "quantity": 1,
+    "unit_price": 360.0,
+    "amount": 360.0
+  },
+  {
+    "item_name": "HIV (CMIA)",
+    "quantity": 1,
+    "unit_price": 300.0,
+    "amount": 300.0
+  },
+  {
+    "item_name": "Liver Function Test(LFT)",
+    "quantity": 1,
+    "unit_price": 400.0,
+    "amount": 400.0
+  },
+  {
+    "item_name": "PTINR",
+    "quantity": 1,
+    "unit_price": 1850.0,
+    "amount": 1850.0
+  },
+  {
+    "item_name": "Pus cis",
+    "quantity": 1,
+    "unit_price": 230.0,
+    "amount": 230.0
+  },
+  {
+    "item_name": "RBS",
+    "quantity": 1,
+    "unit_price": 30.0,
+    "amount": 30.0
+  },
+  {
+    "item_name": "RFT",
+    "quantity": 1,
+    "unit_price": 290.0,
+    "amount": 290.0
+  },
+  {
+    "item_name": "TSH",
+    "quantity": 1,
+    "unit_price": 190.0,
+    "amount": 190.0
+  },
+  {
+    "item_name": "Radiology Services",
+    "quantity": 1,
+    "unit_price": 1250.0,
+    "amount": 1250.0
+  },
+  {
+    "item_name": "Chest PA",
+    "quantity": 1,
+    "unit_price": 250.0,
+    "amount": 250.0
+  },
+  {
+    "item_name": "USG Scan",
+    "quantity": 1,
+    "unit_price": 7000.0,
+    "amount": 7000.0
+  },
+  {
+    "item_name": "Surgery-Procedure Charges",
+    "quantity": 1,
+    "unit_price": 8250.0,
+    "amount": 8250.0
+  },
+  {
+    "item_name": "ANAES. CHARGE",
+    "quantity": 1,
+    "unit_price": 7680.0,
+    "amount": 7680.0
+  },
+  {
+    "item_name": "GAS CHARGES",
+    "quantity": 1,
+    "unit_price": 660.0,
+    "amount": 660.0
+  },
+  {
+    "item_name": "OT CHARGES",
+    "quantity": 1,
+    "unit_price": 2640.0,
+    "amount": 2640.0
+  },
+  {
+    "item_name": "SURGEON FEE",
+    "quantity": 1,
+    "unit_price": 3300.0,
+    "amount": 3300.0
+  }
+]

@@ -1,3 +1,4 @@
+# preprocessing_table_kmeans.py
 import cv2
 import numpy as np
 import os
@@ -10,7 +11,7 @@ from PIL import Image
 from pdf2image import convert_from_path
 from tqdm import tqdm
 from langdetect import detect, LangDetectException
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 
 # ---------------------------
 # Utilities
@@ -22,15 +23,8 @@ def ensure_dir(path):
 # PDF → Image
 # ---------------------------
 def pdf_to_images(pdf_path, dpi=300):
-    # NOTE: Set your poppler_bin path here or configure the environment variable
-    # Ensure this path is correct for your system
-    #poppler_bin = r"D:\web development\poppler\poppler-25.11.0\Library\bin" 
     if pdf_path.lower().endswith('.pdf'):
-        pages = convert_from_path(
-            pdf_path,
-            dpi=dpi,
-            #poppler_path=poppler_bin
-        )
+        pages = convert_from_path(pdf_path, dpi=dpi)
     else:
         pages = [Image.open(pdf_path)]
 
@@ -42,462 +36,497 @@ def pdf_to_images(pdf_path, dpi=300):
     return imgs
 
 # ---------------------------
-# Skew Correction
+# Skew, Denoise, Segmentation (unchanged)
 # ---------------------------
 def deskew(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 50, 150)
-
-    lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100,
-                            minLineLength=200, maxLineGap=20)
+    lines = cv2.HoughLinesP(edges, 1, np.pi/180, 100, minLineLength=200, maxLineGap=20)
     angles = []
-
     if lines is not None:
         for line in lines:
-            x1, y1, x2, y2 = line[0]
-            angle = np.degrees(np.arctan2(y2 - y1, x2 - x1))
-            angles.append(angle)
-
+            x1,y1,x2,y2 = line[0]
+            angles.append(np.degrees(np.arctan2(y2-y1, x2-x1)))
     if not angles:
         return image, 0.0
-
     median_angle = np.median(angles)
-    (h, w) = image.shape[:2]
-    M = cv2.getRotationMatrix2D((w // 2, h // 2), median_angle, 1.0)
-    rotated = cv2.warpAffine(image, M, (w, h),
-                             flags=cv2.INTER_CUBIC,
-                             borderMode=cv2.BORDER_REPLICATE)
-    return rotated, round(float(median_angle), 2)
+    (h,w) = image.shape[:2]
+    M = cv2.getRotationMatrix2D((w//2,h//2), median_angle, 1.0)
+    rotated = cv2.warpAffine(image, M, (w,h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    return rotated, round(float(median_angle),2)
 
-# ---------------------------
-# Noise + Shadow Removal (Phase 1)
-# ---------------------------
 def remove_noise(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
-    # Adaptive Thresholding for clean binary image
-    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
     enhanced = clahe.apply(gray)
-
-    denoised = cv2.adaptiveThreshold(
-        enhanced, 
-        255, 
-        cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
-        cv2.THRESH_BINARY, 
-        11, 
-        2 
-    )
+    denoised = cv2.adaptiveThreshold(enhanced, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
     return cv2.cvtColor(denoised, cv2.COLOR_GRAY2BGR)
 
-# ---------------------------
-# Page Segmentation (Phase 1)
-# ---------------------------
 def segment_page(image):
-    h, w = image.shape[:2]
-    header = (0, 0, w, int(0.12 * h))
-    body = (0, int(0.12 * h), w, int(0.88 * h))
-    footer = (0, int(0.88 * h), w, h)
+    h,w = image.shape[:2]
+    header = (0,0,w,int(0.12*h))
+    body = (0,int(0.12*h),w,int(0.88*h))
+    footer = (0,int(0.88*h),w,h)
     return {"header": header, "body": body, "footer": footer}
 
 # ---------------------------
-# Table Detection (Phase 1)
+# OCR helper (keeps numeric tokens)
 # ---------------------------
-def detect_tables(image, out_debug=None):
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
-    _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-
-    kernel_h = cv2.getStructuringElement(cv2.MORPH_RECT, (30, 1))
-    kernel_v = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 15))
-
-    horiz = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel_h)
-    vert = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel_v)
-
-    mask = cv2.add(horiz, vert)
-    cnts = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    cnts = imutils.grab_contours(cnts)
-
-    boxes = []
-    H, W = image.shape[:2]
-    for c in cnts:
-        x, y, w, h = cv2.boundingRect(c)
-        if w * h > 0.01 * H * W and w > 0.2 * W:
-            boxes.append((x, y, x + w, y + h))
-
-    if out_debug:
-        vis = image.copy()
-        for b in boxes:
-            cv2.rectangle(vis, (b[0], b[1]), (b[2], b[3]), (0, 255, 0), 2)
-        cv2.imwrite(out_debug, vis)
-
-    return boxes
-
-# ---------------------------
-# Language Detection
-# ---------------------------
-def detect_language(text):
-    try:
-        # Use only a small chunk of text for speed
-        return detect(text[:500]) 
-    except LangDetectException:
-        return "unknown"
-
-# ---------------------------
-# Fraud Detection (Phase 1 & 5)
-# ---------------------------
-def detect_whiteners(image):
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    _, mask = cv2.threshold(gray, 245, 255, cv2.THRESH_BINARY)
-    cnts = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    cnts = imutils.grab_contours(cnts)
-
-    H, W = image.shape[:2]
-    return [
-        cv2.boundingRect(c)
-        for c in cnts
-        if cv2.contourArea(c) > 0.002 * H * W
-    ]
-
-def detect_tampered_numbers(raw_ocr_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """
-    Detects low-confidence numbers and flags blocks with potential font/DPI inconsistency 
-    using word area / character count as a proxy.
-    """
-    suspicious_numbers = []
-    area_per_char_ratios = []
-    
-    for word_data in raw_ocr_data:
-        text = word_data.get("text", "")
-        confidence = word_data.get("confidence", 0.0)
-        bbox = word_data.get("bbox", [0, 0, 0, 0])
-        
-        # 1. Low Confidence Number Check
-        if text.strip().isdigit():
-            if confidence < 60:
-                suspicious_numbers.append(f"{text} (Conf: {confidence:.1f})")
-                
-        # 2. DPI/Font Inconsistency Check (Proxy: Word Area / Char Count)
-        if len(text) > 2:
-            w = bbox[2] - bbox[0]
-            h = bbox[3] - bbox[1]
-            # FIX: Filter out likely headings (height > 60 pixels) to prevent false positives
-            if h > 60: 
-                continue
-            
-            area = w * h
-            char_count = len(text)
-            
-            if char_count > 0 and area > 0:
-                area_per_char_ratios.append(area / char_count)
-
-    # Analyze ratios: Count outliers outside the 3-sigma rule
-    inconsistent_fonts = False
-    if area_per_char_ratios:
-        ratios = np.array(area_per_char_ratios)
-        # Ensure mean and std are standard Python floats before comparison, though generally safe.
-        mean_ratio = np.mean(ratios) 
-        std_ratio = np.std(ratios)
-        
-        # inconsistent_count will be a NumPy integer (np.int64), needs casting for safety later
-        inconsistent_count = np.sum(np.abs(ratios - mean_ratio) > 3 * std_ratio) 
-        
-        # Flag if more than 1% of words are inconsistent
-        # inconsistent_fonts here is a NumPy bool_
-        inconsistent_fonts = inconsistent_count > (len(ratios) * 0.01)
-
-    return {
-        "suspicious_numbers": suspicious_numbers,
-        "inconsistent_fonts_detected": inconsistent_fonts
-    }
-
-def detect_numeric_patches(original_gray_image: np.array, raw_ocr_data: List[Dict[str, Any]]) -> bool:
-    """Checks for background color inconsistencies around numeric fields."""
-    
-    H, W = original_gray_image.shape
-    PATCH_THRESHOLD = 20 # Mean pixel difference to flag as suspicious
-
-    for word_data in raw_ocr_data:
-        text = word_data.get("text", "")
-        
-        # Check for numbers or currency amounts
-        if text.strip().isdigit() or any(c in text for c in ['$', '.', ',']):
-            x1, y1, x2, y2 = word_data.get("bbox", [0, 0, 0, 0])
-            
-            # Define inner patch area (the number itself)
-            inner_patch = original_gray_image[y1:y2, x1:x2]
-            
-            # Define a small outer margin (5-pixel border)
-            x1_margin = max(0, x1 - 5)
-            y1_margin = max(0, y1 - 5)
-            x2_margin = min(W, x2 + 5)
-            y2_margin = min(H, y2 + 5)
-            
-            margin_area = original_gray_image[y1_margin:y2_margin, x1_margin:x2_margin]
-            
-            if margin_area.size == 0 or inner_patch.size == 0:
-                continue
-                
-            # These means are NumPy floats
-            mean_margin = np.mean(margin_area) 
-            mean_inner = np.mean(inner_patch)
-            
-            if abs(mean_margin - mean_inner) > PATCH_THRESHOLD:
-                # Returns Python bool True
-                return True
-                
-    # Returns Python bool False
-    return False
-
-# ---------------------------
-# OCR Layer (Phase 2)
-# ---------------------------
-def run_tesseract_layout_ocr(denoised_image):
-    """Performs layout-aware OCR using Tesseract to extract text, bounding boxes, and confidence."""
-    
+def run_tesseract_layout_ocr(denoised_image, numeric_conf_thresh=30):
     pil_img = Image.fromarray(cv2.cvtColor(denoised_image, cv2.COLOR_BGR2RGB))
-    data = pytesseract.image_to_data(pil_img, output_type=pytesseract.Output.DICT, config='--psm 6')
-
+    config = "--oem 1 --psm 6"
+    data = pytesseract.image_to_data(pil_img, output_type=pytesseract.Output.DICT, config=config)
     structured_output = []
     n_boxes = len(data.get('level', []))
-    
     for i in range(n_boxes):
-        text = data.get('text', [''])[i].strip()
-        confidence = float(data.get('conf', [0.0])[i])
-        
-        if text and confidence > 50: 
-            # Note: Tesseract returns standard Python integers here, so casting is not strictly needed.
-            x = data.get('left', [0])[i]
-            y = data.get('top', [0])[i]
-            w = data.get('width', [0])[i]
-            h = data.get('height', [0])[i]
-            
-            bbox = [x, y, x + w, y + h]
-            
-            structured_output.append({
-                "text": text,
-                "confidence": confidence,
-                "bbox": bbox,
-                "page": data.get('page_num', [1])[i],
-                "block_num": data.get('block_num', [1])[i]
-            })
-            
+        raw_text = str(data.get('text', [''])[i]).strip()
+        try:
+            conf = float(data.get('conf', [0])[i])
+        except Exception:
+            conf = 0.0
+        is_numeric_like = bool(re.search(r'[\d\.,]+', raw_text))
+        keep = False
+        if raw_text:
+            if conf > 50:
+                keep = True
+            elif is_numeric_like and conf >= numeric_conf_thresh:
+                keep = True
+        if not keep:
+            continue
+        x = int(data.get('left', [0])[i])
+        y = int(data.get('top', [0])[i])
+        w = int(data.get('width', [0])[i])
+        h = int(data.get('height', [0])[i])
+        bbox = [x, y, x + w, y + h]
+        structured_output.append({
+            "text": raw_text,
+            "confidence": conf,
+            "bbox": bbox,
+            "page": int(data.get('page_num', [1])[i]),
+            "block_num": int(data.get('block_num', [1])[i])
+        })
     return structured_output
 
 # ---------------------------
-# Line-item Extraction (Phase 3)
+# Decimal-style detection & numeric normalizer (auto-detect per page)
 # ---------------------------
-def reconstruct_table_rows(raw_ocr_data, table_bbox, row_tolerance=40):
-    """Groups words into logical table rows based on vertical proximity, 
-    returning full word objects including bboxes."""
-    
-    x1_table, y1_table, x2_table, y2_table = table_bbox
-    table_words = []
-    
-    for word_data in raw_ocr_data:
-        x_mid = (word_data['bbox'][0] + word_data['bbox'][2]) / 2
-        y_mid = (word_data['bbox'][1] + word_data['bbox'][3]) / 2
-        
-        if (x1_table < x_mid < x2_table) and (y1_table < y_mid < y2_table):
-            table_words.append(word_data)
+def detect_decimal_style(raw_ocr_data: List[Dict[str, Any]], debug: bool = False) -> str:
+    tokens = [w.get("text", "").strip() for w in raw_ocr_data if isinstance(w.get("text", ""), str) and w.get("text", "").strip()]
+    dot_decimal = 0
+    comma_decimal = 0
+    thousands_commas = 0
+    thousands_dots = 0
+    both_separators = 0
 
-    if not table_words:
-        return []
+    p_dot_dec = re.compile(r'^\d{1,3}(?:,\d{3})*(?:\.\d{1,3})?$')   # 1,234.56 or 1234.56
+    p_comma_dec = re.compile(r'^\d{1,3}(?:\.\d{3})*(?:,\d{1,3})?$') # 1.234,56 or 1234,56
+    p_commas_thousands = re.compile(r'^\d{1,3}(?:,\d{3})+$')        # 1,234
+    p_dots_thousands = re.compile(r'^\d{1,3}(?:\.\d{3})+$')        # 1.234
 
-    # Sort words primarily by Y and secondarily by X
-    table_words.sort(key=lambda w: w['bbox'][1] + (w['bbox'][0] / 10000))
+    MAX_TOKENS = 200
+    for t in tokens[:MAX_TOKENS]:
+        if ',' in t and '.' in t:
+            both_separators += 1
+            if p_dot_dec.match(t):
+                dot_decimal += 1
+            if p_comma_dec.match(t):
+                comma_decimal += 1
+            continue
+        if p_dot_dec.match(t):
+            dot_decimal += 1
+        if p_comma_dec.match(t):
+            comma_decimal += 1
+        if p_commas_thousands.match(t):
+            thousands_commas += 1
+        if p_dots_thousands.match(t):
+            thousands_dots += 1
 
-    rows = []
-    current_row = []
-    current_row_y_ref = table_words[0]['bbox'][1] 
+    if debug:
+        print("detect_decimal_style:", dot_decimal, comma_decimal, thousands_commas, thousands_dots, both_separators)
 
-    for word_data in table_words:
-        word_y = word_data['bbox'][1]
+    if comma_decimal >= max(2, dot_decimal * 2):
+        return 'comma'
+    if dot_decimal >= max(2, comma_decimal * 2):
+        return 'dot'
+    if thousands_commas >= max(2, thousands_dots * 2) and dot_decimal >= 1:
+        return 'dot'
+    if thousands_dots >= max(2, thousands_commas * 2) and comma_decimal >= 1:
+        return 'comma'
+    if both_separators > 0:
+        if dot_decimal > comma_decimal:
+            return 'dot'
+        if comma_decimal > dot_decimal:
+            return 'comma'
+    return 'unknown'
 
-        if abs(word_y - current_row_y_ref) < row_tolerance:
-            current_row.append(word_data)
+def detect_and_set_page_style(raw_ocr_data: List[Dict[str, Any]], debug: bool = False) -> str:
+    style = detect_decimal_style(raw_ocr_data, debug=debug)
+    return style
+
+def normalize_number_token(tok: str, style: str = 'unknown'):
+    if not tok or not isinstance(tok, str):
+        return None
+    s = tok.strip()
+    s = re.sub(r'^[^\d\-\.,]+|[^\d\-\.,]+$', '', s)
+    if s == '' or all(ch in '-,.' for ch in s):
+        return None
+    def try_float(x):
+        try:
+            return float(x)
+        except:
+            return None
+    if ',' in s and '.' in s:
+        cand = s.replace(',', '')
+        return try_float(cand)
+    if style == 'dot':
+        cand = s.replace(',', '')
+        return try_float(cand)
+    if style == 'comma':
+        if '.' in s:
+            cand = s.replace('.', '').replace(',', '.')
         else:
-            if current_row:
-                # IMPORTANT CHANGE: Append the list of dictionaries (word objects)
-                rows.append(current_row) 
+            cand = s.replace(',', '.')
+        return try_float(cand)
+    # unknown style: conservative
+    if '.' in s and ',' not in s:
+        return try_float(s)
+    if ',' in s and '.' not in s:
+        parts = s.split(',')
+        if len(parts) > 1 and all(len(p) == 3 for p in parts[1:]):
+            return try_float(s.replace(',', ''))
+        return None
+    if re.fullmatch(r'-?\d+', s):
+        return float(s)
+    return None
 
-            current_row = [word_data]
-            current_row_y_ref = word_y
+# ---------------------------
+# Table block detection (uses Tesseract block_num)
+# ---------------------------
+def find_table_block(raw_ocr_data: List[Dict[str, Any]], keywords=('item','description','price','qty','total')):
+    blocks = {}
+    for w in raw_ocr_data:
+        b = w.get('block_num', 0)
+        if b not in blocks:
+            blocks[b] = {"words": [], "texts": [], "bbox": [1e9, 1e9, 0, 0]}
+        blocks[b]["words"].append(w)
+        blocks[b]["texts"].append(w['text'].lower())
+        x1,y1,x2,y2 = w['bbox']
+        bb = blocks[b]["bbox"]
+        bb[0] = min(bb[0], x1)
+        bb[1] = min(bb[1], y1)
+        bb[2] = max(bb[2], x2)
+        bb[3] = max(bb[3], y2)
+    best_block = None
+    best_score = 0
+    for bnum, info in blocks.items():
+        text = " ".join(info["texts"])
+        numeric_count = sum(1 for w in info["words"] if normalize_number_token(w["text"], style='unknown') is not None)
+        score = sum(1 for k in keywords if k in text)
+        score += numeric_count
+        # Bonus: penalize if looks like address-only
+        if numeric_count < 2:
+            score -= 3
+        if score > best_score:
+            best_score = score
+            best_block = (info["bbox"], info["words"])
+    if best_score > 0:
+        return best_block
+    return None
 
-    if current_row:
-        # IMPORTANT CHANGE: Append the list of dictionaries (word objects)
-        rows.append(current_row)
+# ---------------------------
+# Column detection via KMeans (cv2.kmeans)
+# ---------------------------
+def infer_column_centers(words: List[Dict[str,Any]], k_clusters=4) -> List[float]:
+    x_mids = []
+    for w in words:
+        xmid = (w['bbox'][0] + w['bbox'][2]) / 2.0
+        x_mids.append([float(xmid)])
+    if len(x_mids) == 0:
+        return []
+    pts = np.array(x_mids, dtype=np.float32)
+    K = min(max(2, k_clusters), len(pts))
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 1.0)
+    attempts = 5
+    try:
+        compactness, labels, centers = cv2.kmeans(pts, K, None, criteria, attempts, cv2.KMEANS_PP_CENTERS)
+        centers = sorted([c[0] for c in centers])
+        return centers
+    except Exception:
+        xs = sorted([p[0] for p in pts.tolist()])
+        centers = []
+        for i in range(K):
+            q = int(len(xs) * (i+0.5)/K)
+            centers.append(xs[max(0, min(len(xs)-1, q))])
+        return centers
 
+# ---------------------------
+# Reconstruct rows inside a bbox using y-mid clustering
+# ---------------------------
+def group_words_to_rows(words: List[Dict[str,Any]], row_tolerance=18) -> List[List[Dict[str,Any]]]:
+    items = []
+    for w in words:
+        x_mid = (w['bbox'][0] + w['bbox'][2]) / 2.0
+        y_mid = (w['bbox'][1] + w['bbox'][3]) / 2.0
+        w2 = w.copy()
+        w2['_xmid'] = x_mid
+        w2['_ymid'] = y_mid
+        items.append(w2)
+    if not items:
+        return []
+    items.sort(key=lambda x: (x['_ymid'], x['_xmid']))
+    rows = []
+    current = [items[0]]
+    ref = items[0]['_ymid']
+    for it in items[1:]:
+        if abs(it['_ymid'] - ref) <= row_tolerance:
+            current.append(it)
+        else:
+            current.sort(key=lambda x: x['_xmid'])
+            rows.append(current)
+            current = [it]
+            ref = it['_ymid']
+    if current:
+        current.sort(key=lambda x: x['_xmid'])
+        rows.append(current)
     return rows
 
-def classify_table_columns(reconstructed_rows: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
-    """Classifies reconstructed rows into specific columns (Description, Qty, Price, Amount)."""
-    
-    line_items = []
-    
-    if len(reconstructed_rows) < 2:
-        return []
-    
-    # 1. Determine table width for simple column partitioning
-    # Use the first row to approximate the table's total width (min X to max X)
-    all_x = [w['bbox'][0] for row in reconstructed_rows for w in row] + \
-            [w['bbox'][2] for row in reconstructed_rows for w in row]
-    
-    if not all_x:
-        return []
+# ---------------------------
+# Map word -> nearest center (column index)
+# ---------------------------
+def assign_cols_by_centers(row_words: List[Dict[str,Any]], centers: List[float]) -> Dict[int, List[Dict[str,Any]]]:
+    col_map = {i: [] for i in range(len(centers))}
+    for w in row_words:
+        xmid = (w['bbox'][0] + w['bbox'][2]) / 2.0
+        diffs = [abs(xmid - c) for c in centers]
+        idx = int(np.argmin(diffs))
+        col_map[idx].append(w)
+    return col_map
 
-    min_x = min(all_x)
-    max_x = max(all_x)
-    table_width = max_x - min_x
-    
-    # Simple four-column partitioning (e.g., Qty, Desc, Price, Total)
-    # This assumes the columns are roughly equally spaced. Adjust zone size if needed.
-    zone_1_x_max = min_x + table_width * 0.15 # 0-15% (e.g., Quantity)
-    zone_2_x_max = min_x + table_width * 0.70 # 15-70% (e.g., Description)
-    zone_3_x_max = min_x + table_width * 0.85 # 70-85% (e.g., Unit Price)
-    # Zone 4 is 85-100% (e.g., Amount)
+# ---------------------------
+# Strict row validator and extractor (now accepts page_style)
+# ---------------------------
+def extract_line_item_from_row(row: List[Dict[str,Any]], centers: List[float], page_style: str = 'unknown') -> Dict[str,Any]:
+    def has_header_keyword(s):
+        s = (s or "").lower()
+        return any(k in s for k in ['subtotal', 'total', 'tax', 'invoice', 'payment', 'description', 'price', 'qty'])
+    row_text = " ".join([w['text'] for w in row]).strip()
+    if has_header_keyword(row_text) and not re.search(r'\d', row_text):
+        return None
+    numeric_tokens = []
+    for w in row:
+        val = normalize_number_token(w['text'], style=page_style)
+        if val is not None:
+            x_mid = (w['bbox'][0] + w['bbox'][2]) / 2.0
+            numeric_tokens.append((w, val, x_mid))
+    if not numeric_tokens:
+        return None
+    numeric_tokens_sorted_by_x = sorted(numeric_tokens, key=lambda t: t[2])
+    w_amount, amount_val, x_amount = numeric_tokens_sorted_by_x[-1]
 
-    # 2. Process data rows (skipping assumed header)
-    for row in reconstructed_rows[1:]:
-        item_name_words = []
-        quantity_words = []
-        unit_price_words = []
-        amount_words = []
-        
-        for word_data in row:
-            text = word_data['text']
-            x_mid = (word_data['bbox'][0] + word_data['bbox'][2]) / 2
-            
-            # Categorize word based on horizontal position
-            if x_mid < zone_1_x_max:
-                quantity_words.append(text)
-            elif x_mid < zone_2_x_max:
-                item_name_words.append(text)
-            elif x_mid < zone_3_x_max:
-                unit_price_words.append(text)
+    # --- NEW: skip rows where rightmost numeric looks like a date or year ---
+    try:
+        amt_int = int(round(amount_val))
+        if 1900 <= amt_int <= 2100:
+            return None
+    except Exception:
+        pass
+    if re.match(r'^\d{1,2}[/\-]\d{1,2}[/\-]\d{2,4}$', str(w_amount.get('text', ''))):
+        return None
+    # ------------------------------------------------------------------------
+
+    quantity = None
+    for wtok, v, xm in numeric_tokens_sorted_by_x:
+        if 0 < v <= 50 and abs(round(v) - v) < 1e-6:
+            quantity = int(round(v))
+            break
+    unit_price = None
+    candidates = [t for t in numeric_tokens_sorted_by_x if t[2] < x_amount]
+    if candidates:
+        cand = candidates[-1]
+        unit_price = float(cand[1])
+    if unit_price is None and quantity and amount_val is not None:
+        if quantity != 0:
+            unit_price = amount_val / quantity
+    if amount_val is None:
+        return None
+    if amount_val <= 0 or amount_val > 1e7:
+        return None
+    if unit_price is not None and (unit_price <= 0 or unit_price > 1e7):
+        unit_price = None
+    used_word_ids = set()
+    used_word_ids.add(id(w_amount))
+    if quantity is not None:
+        for wtok, v, xm in numeric_tokens_sorted_by_x:
+            if 0 < v <= 50 and abs(round(v) - v) < 1e-6:
+                used_word_ids.add(id(wtok))
+                break
+    if unit_price is not None:
+        for wtok, v, xm in numeric_tokens_sorted_by_x:
+            if abs(float(v) - float(unit_price)) < 1e-6 and id(wtok) not in used_word_ids:
+                used_word_ids.add(id(wtok))
+                break
+    name_parts = []
+    for w in row:
+        if id(w) in used_word_ids:
+            continue
+        txt = w['text'].strip()
+        if not txt:
+            continue
+        if re.fullmatch(r'[\d\.,\-]+', txt):
+            continue
+        name_parts.append(txt)
+    item_name = " ".join(name_parts).strip()
+
+    # --- NEW: strip duplicate currency tokens and collapse whitespace ---
+    # Remove repeated occurrences like "$10,00 $10,00" -> keep single "$10,00"
+    item_name = re.sub(r'(?:\$\s?[\d\.,]+\s*){2,}', lambda m: m.group(0).strip().split()[0], item_name)
+    item_name = re.sub(r'\s{2,}', ' ', item_name).strip()
+    # ---------------------------------------------------------------------
+
+    if not re.search(r'[A-Za-z]', item_name):
+        return None
+    return {
+        "item_name": item_name,
+        "quantity": quantity if quantity is not None else None,
+        "unit_price": float(unit_price) if unit_price is not None else None,
+        "amount": float(amount_val)
+    }
+
+
+# ---------------------------
+# High-level table extractor (glues everything) --- accepts page_style
+# ---------------------------
+def extract_table_items_with_kmeans(raw_ocr_data: List[Dict[str,Any]], fallback_bbox: Tuple[int,int,int,int]=None, page_style: str = 'unknown') -> List[Dict[str,Any]]:
+    found = find_table_block(raw_ocr_data)
+    if found:
+        block_bbox, block_words = found
+    else:
+        if fallback_bbox:
+            x1,y1,x2,y2 = fallback_bbox
+            block_words = [w for w in raw_ocr_data if (w['bbox'][0] >= x1 and w['bbox'][2] <= x2 and w['bbox'][1] >= y1 and w['bbox'][3] <= y2)]
+            block_bbox = list(fallback_bbox)
+        else:
+            block_words = raw_ocr_data
+            block_bbox = [0,0,1000000,1000000]
+    if not block_words:
+        return []
+    centers = infer_column_centers(block_words, k_clusters=4)
+    if not centers:
+        x1,x2 = block_bbox[0], block_bbox[2]
+        width = x2 - x1
+        centers = [x1 + width*(i+0.5)/4.0 for i in range(4)]
+    centers = sorted(centers)
+    rows = group_words_to_rows(block_words, row_tolerance=18)
+    items = []
+    for row in rows:
+        item = extract_line_item_from_row(row, centers, page_style=page_style)
+        if item:
+            items.append(item)
+    return items
+
+# ---------------------------
+# Postprocess (clean names, infer qty=1 as before)
+# ---------------------------
+def postprocess_line_items(line_items):
+    cleaned = []
+    prev = None
+    for item in line_items:
+        name = (item.get("item_name") or "").strip()
+        lname = name.lower()
+        if any(k in lname for k in ['subtotal', 'tax', 'total', 'balance due', 'grand total']):
+            row_type = 'total' if 'total' in lname else ('tax' if 'tax' in lname else 'subtotal')
+            item['row_type'] = row_type
+            if not item.get('amount'):
+                continue
+            cleaned.append(item)
+            prev = item
+            continue
+        if not item.get('amount') or not re.search(r'[A-Za-z]', name):
+            continue
+        if item.get('quantity') is None:
+            if item.get('unit_price') and item.get('amount'):
+                if abs(item['unit_price'] - item['amount']) < 1e-2:
+                    item['quantity'] = 1
             else:
-                amount_words.append(text)
-                
-        # 3. Extract final data
-        
-        def extract_numeric(words):
-            """Finds the first clear numeric or currency value."""
-            if not words:
-                return None
-            
-            # Simple regex to find money format ($, decimal, comma) or pure numbers
-            text_str = " ".join(words).replace('$', '').replace(',', '')
-            match = re.search(r'\d+(\.\d{1,2})?', text_str)
-            return float(match.group(0)) if match else None
-
-        # Clean up item name - remove stray numbers that should be Qty/Price
-        item_name = " ".join(item_name_words).strip()
-        
-        line_items.append({
-            "item_name": item_name,
-            "quantity": extract_numeric(quantity_words),
-            "unit_price": extract_numeric(unit_price_words),
-            "amount": extract_numeric(amount_words)
-        })
-            
-    return line_items
+                item['quantity'] = 1
+        if (item.get('unit_price') is None or item.get('unit_price') == 0) and item.get('quantity') and item.get('amount'):
+            try:
+                up = item['amount'] / item['quantity']
+                if 0 < up < 1e6:
+                    item['unit_price'] = round(up, 2)
+            except Exception:
+                item['unit_price'] = None
+        if item.get('unit_price') and (item['unit_price'] <= 0 or item['unit_price'] > 1e7):
+            item['unit_price'] = None
+        item['item_name'] = re.sub(r'[\|\u2014]+', ' ', name).strip()
+        cleaned.append(item)
+        prev = item
+    return cleaned
 
 # ---------------------------
-# Main Pipeline
+# Integration into your pipeline (detect per-page style)
 # ---------------------------
-def process_document(input_path, out_dir):
+def process_document_kmeans(input_path, out_dir):
     ensure_dir(out_dir)
     pages = pdf_to_images(input_path)
-
     results = []
-    all_line_items = [] # Initialize list to collect all line items across pages
-
+    all_line_items = []
     for i, img in enumerate(tqdm(pages, desc="Processing pages")):
         page_dir = os.path.join(out_dir, f"page_{i+1:03d}")
         ensure_dir(page_dir)
-
-        # PHASE 1: Preprocessing
-        # angle is a float, which is JSON serializable
-        deskewed, angle = deskew(img) 
+        deskewed, angle = deskew(img)
         denoised = remove_noise(deskewed)
         regions = segment_page(denoised)
-        tables = detect_tables(denoised, out_debug=os.path.join(page_dir, "tables.jpg"))
-        original_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
-        
-        # PHASE 2: OCR Layer
-        raw_ocr_data = run_tesseract_layout_ocr(denoised)
-        ocr_output_path = os.path.join(page_dir, "raw_ocr_data.json")
-        with open(ocr_output_path, "w") as f:
+        original_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        raw_ocr_data = run_tesseract_layout_ocr(denoised, numeric_conf_thresh=25)
+        # persist raw ocr
+        with open(os.path.join(page_dir, "raw_ocr_data.json"), "w") as f:
             json.dump(raw_ocr_data, f, indent=2)
-        
-        # PHASE 3: Line Item Extraction
-        # FIX: Bypass unreliable line-based table detection for bbox selection.
-        # Force the extraction to use the entire content body region.
+        # detect page numeric style and pass to extractor
+        page_style = detect_and_set_page_style(raw_ocr_data)
         _, y1, _, y2 = regions['body']
-        main_table_bbox = (0, y1, denoised.shape[1], y2)
-        
-        reconstructed_rows = reconstruct_table_rows(raw_ocr_data, main_table_bbox)
-        rows_output_path = os.path.join(page_dir, "reconstructed_rows.json")
-        with open(rows_output_path, "w") as f:
-            json.dump(reconstructed_rows, f, indent=2)
-        
-        line_items = classify_table_columns(reconstructed_rows)
-        
-        # Collect line items from this page
-        all_line_items.extend(line_items) 
-        
-        line_items_output_path = os.path.join(page_dir, "line_items_classified.json")
-        with open(line_items_output_path, "w") as f:
-            json.dump(line_items, f, indent=2)
-            
-        # PHASE 5: Advanced Fraud Detection
-        whiteners = detect_whiteners(denoised)
-        fraud_ocr_checks = detect_tampered_numbers(raw_ocr_data)
-        numeric_patch_detected = detect_numeric_patches(original_gray, raw_ocr_data)
-        
-        # Summary Metrics
+        fallback_bbox = (0, y1, denoised.shape[1], y2)
+        items = extract_table_items_with_kmeans(raw_ocr_data, fallback_bbox=fallback_bbox, page_style=page_style)
+        items = postprocess_line_items(items)
+        all_line_items.extend(items)
+        with open(os.path.join(page_dir, "line_items_kmeans.json"), "w") as f:
+            json.dump(items, f, indent=2)
+        # other checks (reuse your functions if present)
+        whiteners = detect_whiteners(denoised) if 'detect_whiteners' in globals() else []
+        fraud_ocr_checks = detect_tampered_numbers(raw_ocr_data) if 'detect_tampered_numbers' in globals() else {}
+        numeric_patch_detected = detect_numeric_patches(original_gray, raw_ocr_data) if 'detect_numeric_patches' in globals() else False
         sample_text = " ".join([d['text'] for d in raw_ocr_data])
-        lang = detect_language(sample_text)
-
+        lang = detect(sample_text[:500]) if sample_text else "unknown"
         cv2.imwrite(os.path.join(page_dir, "deskewed.jpg"), deskewed)
         cv2.imwrite(os.path.join(page_dir, "denoised.jpg"), denoised)
-
         summary = {
-            "page": i + 1,
+            "page": i+1,
             "skew_angle": angle,
             "language": lang,
-            "table_count": len(tables),
+            "table_count": 1 if items else 0,
             "fraud": {
-                # len() returns a standard Python int
-                "whiteners": len(whiteners), 
-                "suspicious_numbers": len(fraud_ocr_checks["suspicious_numbers"]),
-                # FIX: Explicitly cast NumPy bool_ to standard Python bool
-                "inconsistent_fonts": bool(fraud_ocr_checks["inconsistent_fonts_detected"]), 
+                "whiteners": len(whiteners),
+                "suspicious_numbers": len(fraud_ocr_checks.get("suspicious_numbers", [])),
+                "inconsistent_fonts": bool(fraud_ocr_checks.get("inconsistent_fonts_detected", False)),
                 "numeric_patch_detected": bool(numeric_patch_detected)
             },
-            "line_items_extracted": len(line_items)
+            "line_items_extracted": len(items)
         }
-
         with open(os.path.join(page_dir, "summary.json"), "w") as f:
             json.dump(summary, f, indent=2)
-
         results.append(summary)
-
     with open(os.path.join(out_dir, "run_summary.json"), "w") as f:
         json.dump(results, f, indent=2)
-        
-    # Modified return to send BOTH summary and extracted data
-    return results, all_line_items 
-
+    return results, all_line_items
 
 # ---------------------------
-# CLI
+# CLI wrapper
 # ---------------------------
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input", required=True, help="Path to the input PDF or image file.")
-    parser.add_argument("-o", "--out", required=True, help="Path to the output directory.")
+    parser.add_argument("-i", "--input", required=True, help="Path to input PDF or image")
+    parser.add_argument("-o", "--out", required=True, help="Output directory")
     args = parser.parse_args()
-
-    # Note: CLI execution doesn't use the second return value
-    process_document(args.input, args.out) 
-    print("✅ Full preprocessing and extraction framework complete.")
+    results, items = process_document_kmeans(args.input, args.out)
+    print(json.dumps(results, indent=2))
+    print("Extracted items:", len(items))

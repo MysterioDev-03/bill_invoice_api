@@ -1,0 +1,13 @@
+{
+  "page": 1,
+  "skew_angle": 0.0,
+  "language": "en",
+  "table_count": 1,
+  "fraud": {
+    "whiteners": 0,
+    "suspicious_numbers": 0,
+    "inconsistent_fonts": false,
+    "numeric_patch_detected": false
+  },
+  "line_items_extracted": 35
+}
